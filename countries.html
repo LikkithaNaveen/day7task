@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        var req = new XMLHttpRequest()
+
+        req.open('GET', 'https://restcountries.com/v3.1/all')
+        //console.log(req)
+        req.send()
+        req.onload = function () {
+            var data = JSON.parse(req.response)
+
+            var Asia = data.filter((element) => (element.continents == 'Asia')).map((element) => (`'continents:'  ${element.continents}   'Region:'  ${element.region}`))
+            console.log(Asia)
+
+            var populationdata = data.filter((element) => (element.population <= 200000)).map((element) => (` country name : ${element.continents}  and this population ${element.population}`))
+            console.log(populationdata)
+
+            function givendetails() {
+                var given = data.map((element) => (`the name of the country is ${element.continents} and capital is ${element.capital} and flag  name ${element.flag}`))
+                console.log(given)
+            }
+            givendetails()
+
+            var reduce = data.map((element) => (element.population)).reduce((acc, cv) => acc + cv)
+            console.log("Total Population: " + reduce)
+
+            var symbol1 = data.map((element) => (element.currencies))
+            // var symbol2=symbol1.symbol
+            console.log(symbol1)
+
+            function getKeyByValue(obj, value) {
+                return Object.entries(obj)
+                    .reduce((acc, [key, val]) => {
+                        if (val === value) {
+                            acc.push(key);
+                        }
+                        return acc;
+                    }, []);
+                }
+
+            ans = getKeyByValue(symbol1, '$');
+            console.log(ans);
+
+
+
+        }
+    </script>
+</body>
+
+</html>
